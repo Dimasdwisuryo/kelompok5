@@ -1,4 +1,4 @@
-﻿// # Kelas:IS-07-04 //
+// # Kelas:IS-07-04 //
 // # Kelompok:5 //
 // # Anggota Kelompok: //
 // #1. Azizah Ftria Wibisono (102062400142) //
@@ -248,7 +248,7 @@ namespace AplikasiManajemenBioskop_0405
             var film = daftarFilm.Find(f => f.Judul == judul);
             if (film != null)
             {
-                Console.WriteLine($"ID: {film.Id}, Judul: {film.Judul}, Genre: {film.Genre}, Harga: Rp{film.Harga:F2}");
+                Console.WriteLine($"ID: {film.Id}, Judul: {film.Judul}, Durasi: {film.Durasi},Genre: {film.Genre}, Harga: Rp{film.Harga:F2}");
             }
             else
             {
