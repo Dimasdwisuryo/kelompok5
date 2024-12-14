@@ -1,0 +1,14 @@
+D:\tubesalpro\KodeProgram\obj\Debug\net8.0\KodeProgram.GeneratedMSBuildEditorConfig.editorconfig
+D:\tubesalpro\KodeProgram\obj\Debug\net8.0\KodeProgram.AssemblyInfoInputs.cache
+D:\tubesalpro\KodeProgram\obj\Debug\net8.0\KodeProgram.AssemblyInfo.cs
+D:\tubesalpro\KodeProgram\obj\Debug\net8.0\KodeProgram.csproj.CoreCompileInputs.cache
+D:\tubesalpro\KodeProgram\bin\Debug\net8.0\KodeProgram.exe
+D:\tubesalpro\KodeProgram\bin\Debug\net8.0\KodeProgram.deps.json
+D:\tubesalpro\KodeProgram\bin\Debug\net8.0\KodeProgram.runtimeconfig.json
+D:\tubesalpro\KodeProgram\bin\Debug\net8.0\KodeProgram.dll
+D:\tubesalpro\KodeProgram\bin\Debug\net8.0\KodeProgram.pdb
+D:\tubesalpro\KodeProgram\obj\Debug\net8.0\KodeProgram.dll
+D:\tubesalpro\KodeProgram\obj\Debug\net8.0\refint\KodeProgram.dll
+D:\tubesalpro\KodeProgram\obj\Debug\net8.0\KodeProgram.pdb
+D:\tubesalpro\KodeProgram\obj\Debug\net8.0\KodeProgram.genruntimeconfig.cache
+D:\tubesalpro\KodeProgram\obj\Debug\net8.0\ref\KodeProgram.dll
