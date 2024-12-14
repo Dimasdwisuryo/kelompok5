@@ -13,24 +13,24 @@ namespace AplikasiManajemenBioskop_0405
 {
     class Film
     {
-        public int Id { get; set; }
-        public string? Judul { get; set; }
-        public string? Durasi { get; set; }
-        public string? Genre { get; set; }
-        public double Harga { get; set; }
+        public int Id;
+        public string? Judul;
+        public string? Durasi;
+        public string? Genre;
+        public double Harga;
     }
 
     class Pemesanan
     {
-        public int Id { get; set; }
-        public string? NamaPembeli { get; set; }
-        public string? JudulFilm { get; set; }
-        public string? JamTayang { get; set; }
-        public string? Kursi { get; set; }
-        public string? Kategori { get; set; }
-        public double HargaTiket { get; set; }
-        public double Diskon { get; set; }
-        public double TotalBayar { get; set; }
+        public int Id;
+        public string? NamaPembeli;
+        public string? JudulFilm;
+        public string? JamTayang;
+        public string? Kursi;
+        public string? Kategori;
+        public double HargaTiket;
+        public double Diskon;
+        public double TotalBayar;
     }
 
     class Program
@@ -103,7 +103,6 @@ namespace AplikasiManajemenBioskop_0405
             }
         }
 
-        // halaman login
         static bool Login_0405()
         {
             Console.WriteLine("=== Login Kasir Bioskop ===");
@@ -124,7 +123,6 @@ namespace AplikasiManajemenBioskop_0405
             }
         }
 
-        // Tambah Film
         static void TambahFilm_0405()
         {
             Console.WriteLine("=== Tambah Film ===");
@@ -137,7 +135,7 @@ namespace AplikasiManajemenBioskop_0405
             Console.Write("Masukkan Genre Film: ");
             string? genre = Console.ReadLine();
 
-            Console.Write("Masukkan Harga Tiket: ");
+            Console.Write("Masukkan Harga Tiket: Rp.");
             if (double.TryParse(Console.ReadLine(), out double harga))
             {
                 Film filmBaru = new Film
@@ -157,7 +155,6 @@ namespace AplikasiManajemenBioskop_0405
             }
         }
 
-        // Lihat Daftar Film
         static void LihatFilm_0405()
         {
             Console.WriteLine("=== Daftar Film ===");
@@ -169,11 +166,10 @@ namespace AplikasiManajemenBioskop_0405
 
             foreach (var film in daftarFilm)
             {
-                Console.WriteLine($"ID: {film.Id}, Judul: {film.Judul}, Durasi: {film.Durasi}, Genre: {film.Genre}, Harga: Rp. {film.Harga:F2}");
+                Console.WriteLine($"ID: {film.Id}, Judul: {film.Judul}, Durasi: {film.Durasi}, Genre: {film.Genre}, Harga: Rp.{film.Harga}");
             }
         }
 
-        // Update Film
         static void UpdateFilm_0405()
         {
             Console.WriteLine("=== Update Film ===");
@@ -192,7 +188,7 @@ namespace AplikasiManajemenBioskop_0405
                     Console.Write("Masukkan Genre Film Baru: ");
                     film.Genre = Console.ReadLine();
 
-                    Console.Write("Masukkan Harga Tiket Baru: ");
+                    Console.Write("Masukkan Harga Tiket Baru: Rp.");
                     if (double.TryParse(Console.ReadLine(), out double hargaBaru))
                     {
                         film.Harga = hargaBaru;
@@ -214,7 +210,6 @@ namespace AplikasiManajemenBioskop_0405
             }
         }
 
-        // Hapus Film
         static void HapusFilm_0405()
         {
             Console.WriteLine("=== Hapus Film ===");
@@ -238,7 +233,6 @@ namespace AplikasiManajemenBioskop_0405
             }
         }
 
-        // Cari Film
         static void CariFilm_0405()
         {
             Console.WriteLine("=== Cari Film ===");
@@ -248,7 +242,7 @@ namespace AplikasiManajemenBioskop_0405
             var film = daftarFilm.Find(f => f.Judul == judul);
             if (film != null)
             {
-                Console.WriteLine($"ID: {film.Id}, Judul: {film.Judul}, Durasi: {film.Durasi},Genre: {film.Genre}, Harga: Rp{film.Harga:F2}");
+                Console.WriteLine($"ID: {film.Id}, Judul: {film.Judul}, Durasi: {film.Durasi},Genre: {film.Genre}, Harga: Rp.{film.Harga}");
             }
             else
             {
@@ -265,7 +259,7 @@ namespace AplikasiManajemenBioskop_0405
             var film = daftarFilm.Find(f => f.Durasi == durasi);
             if (film != null)
             {
-                Console.WriteLine($"ID: {film.Id}, Judul: {film.Judul}, Durasi: {film.Durasi}, Genre: {film.Genre}, Harga: Rp. {film.Harga:F2}");
+                Console.WriteLine($"ID: {film.Id}, Judul: {film.Judul}, Durasi: {film.Durasi}, Genre: {film.Genre}, Harga: Rp.{film.Harga}");
             }
             else
             {
@@ -273,7 +267,6 @@ namespace AplikasiManajemenBioskop_0405
             }
         }
 
-        // Pemesanan Tiket
         static void PemesananTiket_0405()
         {
             Console.WriteLine("=== Pemesanan Tiket ===");
@@ -285,7 +278,7 @@ namespace AplikasiManajemenBioskop_0405
                 var film = daftarFilm.Find(f => f.Id == idFilm);
                 if (film != null)
                 {
-                    Console.Write("Masukkan Jam Tayang: ");
+                    Console.Write("Masukkan Jam Tayang : ");
                     string? jamTayang = Console.ReadLine();
                     Console.Write("Masukkan Nomor Kursi: ");
                     string? kursi = Console.ReadLine();
@@ -326,7 +319,7 @@ namespace AplikasiManajemenBioskop_0405
                     if (metodePembayaran == "1")
                     {
                         Console.WriteLine("=== Pembayaran Tunai ===");
-                        Console.Write("Masukkan jumlah uang: ");
+                        Console.WriteLine("Masukkan jumlah uang: Rp.");
                         if (double.TryParse(Console.ReadLine(), out double uangBayar))
                         {
                             if (uangBayar < hargaTiket)
@@ -336,40 +329,34 @@ namespace AplikasiManajemenBioskop_0405
                             else
                             {
                                 double kembalian = uangBayar - hargaTiket;
-                                Console.WriteLine($"Pembayaran berhasil. Kembalian: Rp {kembalian:F2}");
+                                Console.WriteLine($"Pembayaran berhasil. Kembalian: Rp.{kembalian}");
                             }
                         }
                         else
                         {
-                            Console.WriteLine("Input jumlah uang tidak valid.");
+                            Console.WriteLine("Jumlah uang tidak valid.");
                         }
                     }
                     else if (metodePembayaran == "2")
                     {
                         Console.WriteLine("=== Pembayaran Non-Tunai ===");
-                        Console.Write("Masukkan nomor kartu kredit (16 digit): ");
-                        string? nomorKartuKredit = Console.ReadLine();
-                        if (string.IsNullOrWhiteSpace(nomorKartuKredit) || nomorKartuKredit.Length != 16)
-                        {
-                            Console.WriteLine("Nomor kartu kredit tidak valid.");
-                            return;
-                        }
+                        Console.WriteLine("Masukkan nomor kartu kredit: ");
+                        string? nomorKartu = Console.ReadLine();
 
-                        Console.Write("Masukkan nama pemilik kartu: ");
+                        Console.WriteLine("Masukkan nama pemilik kartu: ");
                         string? namaPemilikKartu = Console.ReadLine();
-                        if (string.IsNullOrWhiteSpace(namaPemilikKartu))
+                        if (namaPemilikKartu == namaPembeli)
                         {
-                            Console.WriteLine("Nama pemilik kartu tidak boleh kosong.");
+                            Console.WriteLine("Nama pemilik kartu tidak valid.");
                             return;
                         }
-
                         Console.WriteLine("Pembayaran berhasil menggunakan kartu kredit.");
                     }
                     else
                     {
                         Console.WriteLine("Metode pembayaran tidak valid. Silakan coba lagi.");
+                        return;
                     }
-
 
                     Console.WriteLine("Kode Diskon (opsional): ");
                     string? kodeDiskon = Console.ReadLine();
@@ -421,7 +408,6 @@ namespace AplikasiManajemenBioskop_0405
             }
         }
 
-        // Tampilkan Invoice
         static void TampilkanInvoice_0405()
         {
             Console.WriteLine("=== Invoice Pemesanan ===");
@@ -439,9 +425,9 @@ namespace AplikasiManajemenBioskop_0405
                 Console.WriteLine($"Jam Tayang: {pemesanan.JamTayang}");
                 Console.WriteLine($"Kursi: {pemesanan.Kursi}");
                 Console.WriteLine($"Kategori: {pemesanan.Kategori}");
-                Console.WriteLine($"Harga Tiket: Rp{pemesanan.HargaTiket:F2}");
-                Console.WriteLine($"Diskon: Rp{pemesanan.Diskon:F2}");
-                Console.WriteLine($"Total Bayar: Rp{pemesanan.TotalBayar:F2}");
+                Console.WriteLine($"Harga Tiket: Rp.{pemesanan.HargaTiket}");
+                Console.WriteLine($"Diskon: Rp.{pemesanan.Diskon}");
+                Console.WriteLine($"Total Bayar: Rp.{pemesanan.TotalBayar}");
                 Console.WriteLine();
             }
         }
