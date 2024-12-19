@@ -1,10 +1,10 @@
 // # Kelas:IS-07-04 //
 // # Kelompok:5 //
 // # Anggota Kelompok: //
-// #1. Azizah Fitria Wibisono (102062400142) //
-// #2. Dimas Arya Irwansyah (102062400113) //
-// #3. Dimas Dwi Suryo Aji (102062400139) //
-// #4. Gita Naisya Wardani (102062400034)//
+// #1. Gita Naisya Wardani (102062400034) //
+// #2. Azizah Fitria Wibisono (102062400142) //
+// #3. Dimas Arya Irwansyah (102062400113) //
+// #4. Dimas Dwi Suryo Aji (102062400139) //
 
 using System;
 using System.Collections.Generic;
@@ -439,9 +439,9 @@ namespace AplikasiManajemenBioskop_0405
 
                             Console.WriteLine("Masukkan nama pemilik kartu: ");
                             string? namaPemilikKartu = Console.ReadLine();
-                            if (namaPemilikKartu == namaPembeli)
+                            if (string.IsNullOrEmpty(namaPemilikKartu) || namaPemilikKartu != namaPembeli)
                             {
-                                Console.WriteLine("Nama pemilik kartu tidak valid.");
+                                Console.WriteLine("Nama pemilik kartu tidak sesuai dengan nama pembeli.");
                                 return;
                             }
                             Console.WriteLine("Pembayaran berhasil menggunakan kartu kredit.");
