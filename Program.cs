@@ -8,29 +8,31 @@
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace AplikasiManajemenBioskop_0405
 {
     class Film
     {
-        public int Id;
-        public string? Judul;
-        public string? Durasi;
-        public string? Genre;
-        public double Harga;
+        public int Id { get; set; }
+        public int Durasi { get; set; }
+        public string? Judul { get; set; }
+        public string? Genre { get; set; }
+        public double Harga { get; set; }
     }
 
     class Pemesanan
     {
-        public int Id;
-        public string? NamaPembeli;
-        public string? JudulFilm;
-        public string? JamTayang;
-        public string? Kursi;
-        public string? Kategori;
-        public double HargaTiket;
-        public double Diskon;
-        public double TotalBayar;
+        public int Id { get; set; }
+        public string? NamaPembeli { get; set; }
+        public string? JudulFilm { get; set; }
+        public string? JamTayang { get; set; }
+        public string? Kursi { get; set; }
+        public string? Kategori { get; set; }
+        public double HargaTiket { get; set; }
+        public double Diskon { get; set; }
+        public double TotalBayar { get; set; }
+        public double Kembalian { get; set; }
     }
 
     class Program
@@ -102,19 +104,13 @@ namespace AplikasiManajemenBioskop_0405
                                 Console.WriteLine("Terima kasih telah menggunakan aplikasi ini!");
                                 return; // Keluar dari program
                             default:
-                                Console.WriteLine("Pilihan tidak valid, coba lagi.");
-                                break;
+                                throw new FormatException("Harap masukkan angka sesuai menu (1-9).");
                         }
                     }
                     catch (FormatException)
                     {
                         // Menangkap kesalahan jika input bukan angka
-                        Console.WriteLine("Input tidak valid. Harap masukkan angka.");
-                    }
-                    catch (Exception ex)
-                    {
-                        // Menangkap kesalahan umum
-                        Console.WriteLine("Terjadi kesalahan: " + ex.Message);
+                        Console.WriteLine("Input tidak valid." + "Harap masukkan angka sesuai menu (1-9).");
                     }
                 }
             }
@@ -126,7 +122,7 @@ namespace AplikasiManajemenBioskop_0405
         }
 
 
-        static bool Login_0405()
+        static bool Login_0405() // Untuk login kasir
         {
             try
             {
@@ -139,7 +135,7 @@ namespace AplikasiManajemenBioskop_0405
                 // Validasi input username dan password
                 if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(password))
                 {
-                    throw new Exception("Username atau password tidak boleh kosong.");
+                    throw new FormatException("Username atau password tidak boleh kosong.");
                 }
 
                 if (username == "admin" && password == "admin")
@@ -153,13 +149,12 @@ namespace AplikasiManajemenBioskop_0405
                     return false;
                 }
             }
-            catch (Exception ex)
+            catch (FormatException ex)
             {
-                Console.WriteLine("Terjadi kesalahan saat login: " + ex.Message);
+                Console.WriteLine("Terjadi kesalahan: " + ex.Message);
                 return false;
             }
         }
-
 
         static void TambahFilm_0405()
         {
@@ -169,8 +164,8 @@ namespace AplikasiManajemenBioskop_0405
                 Console.Write("Masukkan Judul Film: ");
                 string? judul = Console.ReadLine();
 
-                Console.Write("Masukkan Durasi Film: ");
-                string? durasi = Console.ReadLine();
+                Console.Write("Masukkan Durasi Film (dalam menit): ");
+                int durasi = int.Parse(Console.ReadLine());
 
                 Console.Write("Masukkan Genre Film: ");
                 string? genre = Console.ReadLine();
@@ -198,10 +193,6 @@ namespace AplikasiManajemenBioskop_0405
             {
                 Console.WriteLine("Input tidak valid: " + ex.Message);
             }
-            catch (Exception ex)
-            {
-                Console.WriteLine("Terjadi kesalahan saat menambah film: " + ex.Message);
-            }
         }
 
         static void LihatFilm_0405()
@@ -217,7 +208,7 @@ namespace AplikasiManajemenBioskop_0405
 
                 foreach (var film in daftarFilm)
                 {
-                    Console.WriteLine($"ID: {film.Id}, Judul: {film.Judul}, Durasi: {film.Durasi}, Genre: {film.Genre}, Harga: Rp.{film.Harga}");
+                    Console.WriteLine($"ID: {film.Id}, Judul: {film.Judul}, Durasi: {film.Durasi} menit, Genre: {film.Genre}, Harga: Rp.{film.Harga}");
                 }
             }
             catch (Exception ex)
@@ -240,8 +231,8 @@ namespace AplikasiManajemenBioskop_0405
                         Console.Write("Masukkan Judul Film Baru: ");
                         film.Judul = Console.ReadLine();
 
-                        Console.Write("Masukkan Durasi Film Baru: ");
-                        film.Durasi = Console.ReadLine();
+                        Console.Write("Masukkan Durasi Film Baru (dalam menit): ");
+                        film.Durasi = int.Parse(Console.ReadLine());
 
                         Console.Write("Masukkan Genre Film Baru: ");
                         film.Genre = Console.ReadLine();
@@ -317,12 +308,21 @@ namespace AplikasiManajemenBioskop_0405
             {
                 Console.WriteLine("=== Cari Film ===");
                 Console.Write("Masukkan Judul Film yang ingin dicari: ");
-                string? judul = Console.ReadLine();
+                string? judul = Console.ReadLine()?.ToLower();
 
-                var film = daftarFilm.Find(f => f.Judul == judul);
-                if (film != null)
+                if (string.IsNullOrWhiteSpace(judul))
                 {
-                    Console.WriteLine($"ID: {film.Id}, Judul: {film.Judul}, Durasi: {film.Durasi},Genre: {film.Genre}, Harga: Rp.{film.Harga}");
+                    Console.WriteLine("Judul film tidak boleh kosong.");
+                    return;
+                }
+
+                var hasil = daftarFilm.Where(f => f.Judul != null && f.Judul.ToLower().Contains(judul)).ToList();
+                if (hasil.Count > 0)
+                {
+                    foreach (var film in hasil)
+                    {
+                        Console.WriteLine($"ID: {film.Id}, Judul: {film.Judul}, Durasi: {film.Durasi} menit, Genre: {film.Genre}, Harga: Rp.{film.Harga}");
+                    }
                 }
                 else
                 {
@@ -341,21 +341,24 @@ namespace AplikasiManajemenBioskop_0405
             {
                 Console.WriteLine("=== Filter Film Berdasarkan Durasi ===");
                 Console.Write("Masukkan Durasi Film yang ingin difilter: ");
-                string? durasi = Console.ReadLine();
+                int durasi = int.Parse(Console.ReadLine());
 
-                var film = daftarFilm.Find(f => f.Durasi == durasi);
-                if (film != null)
+                var films = daftarFilm.FindAll(f => f.Durasi == durasi);
+                if (films != null && films.Count > 0)
                 {
-                    Console.WriteLine($"ID: {film.Id}, Judul: {film.Judul}, Durasi: {film.Durasi}, Genre: {film.Genre}, Harga: Rp.{film.Harga}");
+                    foreach (var film in films)
+                    {
+                        Console.WriteLine($"ID: {film.Id}, Judul: {film.Judul}, Durasi: {film.Durasi} menit, Genre: {film.Genre}, Harga: Rp.{film.Harga}");
+                    }
                 }
                 else
                 {
-                    Console.WriteLine("Film tidak ditemukan.");
+                    throw new Exception("Film tidak ditemukan.");
                 }
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Terjadi kesalahan saat memfilter film: " + ex.Message);
+                Console.WriteLine("Terjadi kesalahan saat filter film: " + ex.Message);
             }
         }
 
@@ -366,16 +369,47 @@ namespace AplikasiManajemenBioskop_0405
                 Console.WriteLine("=== Pemesanan Tiket ===");
                 Console.Write("Masukkan Nama Pembeli: ");
                 string? namaPembeli = Console.ReadLine();
+
                 Console.Write("Masukkan ID Film: ");
                 if (int.TryParse(Console.ReadLine(), out int idFilm))
                 {
                     var film = daftarFilm.Find(f => f.Id == idFilm);
                     if (film != null)
                     {
-                        Console.Write("Masukkan Jam Tayang : ");
+                        Console.Write("Masukkan Jam Tayang: ");
                         string? jamTayang = Console.ReadLine();
-                        Console.Write("Masukkan Nomor Kursi: ");
-                        string? kursi = Console.ReadLine();
+
+                        // Tampilkan kursi yang tersedia
+                        Console.WriteLine("Kursi yang tersedia: ");
+                        var kursiTersedia = new HashSet<string> { "A1", "A2", "A3", "A4", "A5", "B1", "B2", "B3", "B4", "B5" };
+
+                        // Hapus kursi yang sudah dipesan untuk film dan jam tayang tersebut
+                        foreach (var pemesanan in daftarPemesanan)
+                        {
+                            if (pemesanan.JudulFilm == film.Judul && pemesanan.JamTayang == jamTayang)
+                            {
+                                kursiTersedia.Remove(pemesanan.Kursi);
+                            }
+                        }
+
+                        if (kursiTersedia.Count == 0)
+                        {
+                            Console.WriteLine("Maaf, semua kursi telah dipesan untuk jam tayang ini.");
+                            return;
+                        }
+
+                        Console.WriteLine(string.Join(", ", kursiTersedia));
+
+                        Console.Write("Masukkan Nomor Kursi (pisahkan dengan koma jika memilih lebih dari satu): ");
+                        string? inputKursi = Console.ReadLine();
+                        var kursiDipilih = inputKursi?.Split(',').Select(k => k.Trim()).ToList();
+
+                        if (kursiDipilih == null || kursiDipilih.Count == 0 || !kursiDipilih.All(k => kursiTersedia.Contains(k)))
+                        {
+                            Console.WriteLine("Satu atau lebih kursi yang dipilih tidak tersedia atau sudah dipesan. Silakan coba lagi.");
+                            return;
+                        }
+
                         Console.WriteLine("Masukkan Kategori Tiket: ");
                         Console.WriteLine("1. Reguler");
                         Console.WriteLine("2. Premium");
@@ -404,6 +438,24 @@ namespace AplikasiManajemenBioskop_0405
                                 return;
                         }
 
+                        Console.WriteLine("Kode Diskon (opsional): ");
+                        string? kodeDiskon = Console.ReadLine();
+                        if (kodeDiskon == "DISKON10")
+                        {
+                            diskon = 0.1 * hargaTiket;
+                        }
+                        else if (kodeDiskon == "DISKON20")
+                        {
+                            diskon = 0.2 * hargaTiket;
+                        }
+                        else if (!string.IsNullOrEmpty(kodeDiskon))
+                        {
+                            Console.WriteLine("Kode diskon tidak valid.");
+                            return;
+                        }
+
+                        double totalBayar = (hargaTiket - diskon) * kursiDipilih.Count;
+
                         Console.WriteLine("Pilih metode pembayaran: ");
                         Console.WriteLine("1. Tunai");
                         Console.WriteLine("2. Non-Tunai");
@@ -413,16 +465,17 @@ namespace AplikasiManajemenBioskop_0405
                         if (metodePembayaran == "1")
                         {
                             Console.WriteLine("=== Pembayaran Tunai ===");
-                            Console.WriteLine("Masukkan jumlah uang: Rp.");
+                            Console.Write("Masukkan jumlah uang: Rp. ");
                             if (double.TryParse(Console.ReadLine(), out double uangBayar))
                             {
-                                if (uangBayar < hargaTiket)
+                                if (uangBayar < totalBayar)
                                 {
                                     Console.WriteLine("Uang tidak cukup untuk membayar.");
+                                    return;
                                 }
                                 else
                                 {
-                                    double kembalian = uangBayar - hargaTiket;
+                                    double kembalian = uangBayar - totalBayar;
                                     Console.WriteLine($"Pembayaran berhasil. Kembalian: Rp.{kembalian}");
                                 }
                             }
@@ -434,10 +487,10 @@ namespace AplikasiManajemenBioskop_0405
                         else if (metodePembayaran == "2")
                         {
                             Console.WriteLine("=== Pembayaran Non-Tunai ===");
-                            Console.WriteLine("Masukkan nomor kartu kredit: ");
+                            Console.Write("Masukkan nomor kartu kredit: ");
                             string? nomorKartu = Console.ReadLine();
 
-                            Console.WriteLine("Masukkan nama pemilik kartu: ");
+                            Console.Write("Masukkan nama pemilik kartu: ");
                             string? namaPemilikKartu = Console.ReadLine();
                             if (string.IsNullOrEmpty(namaPemilikKartu) || namaPemilikKartu != namaPembeli)
                             {
@@ -452,42 +505,27 @@ namespace AplikasiManajemenBioskop_0405
                             return;
                         }
 
-                        Console.WriteLine("Kode Diskon (opsional): ");
-                        string? kodeDiskon = Console.ReadLine();
-                        if (kodeDiskon == "DISKON10")
+                        // Tandai kursi sebagai dipesan
+                        foreach (var kursi in kursiDipilih)
                         {
-                            diskon = 0.1 * hargaTiket;
-                        }
-                        else if (kodeDiskon == "DISKON20")
-                        {
-                            diskon = 0.2 * hargaTiket;
-                        }
-                        else if (kodeDiskon == "")
-                        {
-                            diskon = 0;
-                        }
-                        else
-                        {
-                            Console.WriteLine("Kode diskon tidak valid.");
-                            return;
+                            Pemesanan pemesananBaru = new Pemesanan
+                            {
+                                Id = idPemesananCounter++,
+                                NamaPembeli = namaPembeli,
+                                JudulFilm = film.Judul,
+                                JamTayang = jamTayang,
+                                Kursi = kursi,
+                                Kategori = kategori,
+                                HargaTiket = hargaTiket,
+                                Diskon = diskon,
+                                TotalBayar = (hargaTiket - diskon)
+                            };
+
+                            // Tambahkan pemesanan ke daftar pemesanan
+                            daftarPemesanan.Add(pemesananBaru);
                         }
 
-                        double totalBayar = hargaTiket - diskon;
-                        Pemesanan pemesanan = new Pemesanan
-                        {
-                            Id = idPemesananCounter++,
-                            NamaPembeli = namaPembeli,
-                            JudulFilm = film.Judul,
-                            JamTayang = jamTayang,
-                            Kursi = kursi,
-                            Kategori = kategori,
-                            HargaTiket = hargaTiket,
-                            Diskon = diskon,
-                            TotalBayar = hargaTiket - diskon
-                        };
-
-                        daftarPemesanan.Add(pemesanan);
-                        Console.WriteLine("Pemesanan berhasil.");
+                        Console.WriteLine("Pemesanan berhasil. Kursi yang Anda pilih: " + string.Join(", ", kursiDipilih));
                     }
                     else
                     {
@@ -511,6 +549,7 @@ namespace AplikasiManajemenBioskop_0405
             }
         }
 
+
         // Tampilkan Invoice
         static void TampilkanInvoice_0405()
         {
@@ -521,19 +560,39 @@ namespace AplikasiManajemenBioskop_0405
                 return;
             }
 
+            Console.WriteLine("-------------------------------------------------------------");
+            Console.WriteLine("| ID  | Nama Pembeli    | Film           | Jam   | Kursi   |");
+            Console.WriteLine("-------------------------------------------------------------");
+
             foreach (var pemesanan in daftarPemesanan)
             {
-                Console.WriteLine($"ID: {pemesanan.Id}");
-                Console.WriteLine($"Nama Pembeli: {pemesanan.NamaPembeli}");
-                Console.WriteLine($"Judul Film: {pemesanan.JudulFilm}");
-                Console.WriteLine($"Jam Tayang: {pemesanan.JamTayang}");
-                Console.WriteLine($"Kursi: {pemesanan.Kursi}");
-                Console.WriteLine($"Kategori: {pemesanan.Kategori}");
-                Console.WriteLine($"Harga Tiket: Rp.{pemesanan.HargaTiket}");
-                Console.WriteLine($"Diskon: Rp.{pemesanan.Diskon}");
-                Console.WriteLine($"Total Bayar: Rp.{pemesanan.TotalBayar}");
-                Console.WriteLine();
+                Console.WriteLine($"| {pemesanan.Id,-4} | {pemesanan.NamaPembeli,-15} | {pemesanan.JudulFilm,-14} | {pemesanan.JamTayang,-5} | {pemesanan.Kursi,-7} |");
+            }
+
+            Console.WriteLine("-------------------------------------------------------------");
+            Console.WriteLine();
+
+            Console.WriteLine("=== Detail Pemesanan ===");
+            foreach (var pemesanan in daftarPemesanan)
+            {
+                Console.WriteLine($"ID Pemesanan   : {pemesanan.Id}");
+                Console.WriteLine($"Nama Pembeli   : {pemesanan.NamaPembeli}");
+                Console.WriteLine($"Judul Film     : {pemesanan.JudulFilm}");
+                Console.WriteLine($"Jam Tayang     : {pemesanan.JamTayang}");
+                Console.WriteLine($"Kursi          : {pemesanan.Kursi}");
+                Console.WriteLine($"Kategori Tiket : {pemesanan.Kategori}");
+                Console.WriteLine($"Harga Tiket    : Rp.{pemesanan.HargaTiket:N}");
+                Console.WriteLine($"Diskon         : Rp.{pemesanan.Diskon:N}");
+                Console.WriteLine($"Total Bayar    : Rp.{pemesanan.TotalBayar:N}");
+
+                // Cek apakah ada kembalian (hanya jika metode pembayaran adalah tunai)
+                if (pemesanan.Kembalian > 0)
+                {
+                    Console.WriteLine($"Kembalian      : Rp.{pemesanan.Kembalian:N}");
+                }
+                Console.WriteLine("-------------------------------------------------------------");
             }
         }
+
     }
 }
