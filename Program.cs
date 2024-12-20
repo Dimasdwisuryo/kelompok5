@@ -156,7 +156,7 @@ namespace AplikasiManajemenBioskop_0405
             }
         }
 
-        static void TambahFilm_0405()
+        static void TambahFilm_0405() // Untuk fitur menambahkan film
         {
             try
             {
@@ -195,7 +195,7 @@ namespace AplikasiManajemenBioskop_0405
             }
         }
 
-        static void LihatFilm_0405()
+        static void LihatFilm_0405() // Untuk menampilkan daftar film yang sudah ditambahkan
         {
             try
             {
@@ -217,7 +217,7 @@ namespace AplikasiManajemenBioskop_0405
             }
         }
 
-        static void UpdateFilm_0405()
+        static void UpdateFilm_0405() // Untuk mengubah film jika ada kesalahan input
         {
             try
             {
@@ -268,7 +268,7 @@ namespace AplikasiManajemenBioskop_0405
             }
         }
 
-        static void HapusFilm_0405()
+        static void HapusFilm_0405() // Untuk menghapus film jika ada kesalahan input
         {
             try
             {
@@ -296,13 +296,9 @@ namespace AplikasiManajemenBioskop_0405
             {
                 Console.WriteLine("Input tidak valid: " + ex.Message);
             }
-            catch (Exception ex)
-            {
-                Console.WriteLine("Terjadi kesalahan saat menghapus film: " + ex.Message);
-            }
         }
 
-        static void CariFilm_0405()
+        static void CariFilm_0405() // Untuk mencari film dengan judul yang di inputkan
         {
             try
             {
@@ -310,7 +306,7 @@ namespace AplikasiManajemenBioskop_0405
                 Console.Write("Masukkan Judul Film yang ingin dicari: ");
                 string? judul = Console.ReadLine()?.ToLower();
 
-                if (string.IsNullOrWhiteSpace(judul))
+                if (string.IsNullOrWhiteSpace(judul)) // Validasi input jika user mengisi dengan enter atau dikosongi
                 {
                     Console.WriteLine("Judul film tidak boleh kosong.");
                     return;
@@ -326,12 +322,12 @@ namespace AplikasiManajemenBioskop_0405
                 }
                 else
                 {
-                    Console.WriteLine("Film tidak ditemukan.");
+                    throw new FormatException("Film tidak ditemukan.");
                 }
             }
-            catch (Exception ex)
+            catch (FormatException ex) // Eror handling atau memberi informasi pada user
             {
-                Console.WriteLine("Terjadi kesalahan saat mencari film: " + ex.Message);
+                Console.WriteLine("Terjadi kesalahan: " + ex.Message);
             }
         }
 
