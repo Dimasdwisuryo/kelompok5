@@ -107,7 +107,7 @@ namespace AplikasiManajemenBioskop_0405
                                 throw new FormatException("Harap masukkan angka sesuai menu (1-9).");
                         }
                     }
-                    catch (FormatException)
+                    catch (FormatException ex) // Eror handling atau memberi informasi pada user
                     {
                         // Menangkap kesalahan jika input bukan angka
                         Console.WriteLine("Input tidak valid." + "Harap masukkan angka sesuai menu (1-9).");
@@ -149,7 +149,7 @@ namespace AplikasiManajemenBioskop_0405
                     return false;
                 }
             }
-            catch (FormatException ex)
+            catch (FormatException ex) // Eror handling atau memberi informasi pada user
             {
                 Console.WriteLine("Terjadi kesalahan: " + ex.Message);
                 return false;
@@ -189,7 +189,7 @@ namespace AplikasiManajemenBioskop_0405
                     throw new FormatException("Harga harus berupa angka.");
                 }
             }
-            catch (FormatException ex)
+            catch (FormatException ex) // Eror handling atau memberi informasi pada user
             {
                 Console.WriteLine("Input tidak valid: " + ex.Message);
             }
@@ -211,7 +211,7 @@ namespace AplikasiManajemenBioskop_0405
                     Console.WriteLine($"ID: {film.Id}, Judul: {film.Judul}, Durasi: {film.Durasi} menit, Genre: {film.Genre}, Harga: Rp.{film.Harga}");
                 }
             }
-            catch (Exception ex)
+            catch (Exception ex) // Eror handling atau memberi informasi pada user
             {
                 Console.WriteLine("Terjadi kesalahan saat menampilkan daftar film: " + ex.Message);
             }
@@ -258,7 +258,7 @@ namespace AplikasiManajemenBioskop_0405
                     throw new FormatException("ID harus berupa angka.");
                 }
             }
-            catch (FormatException ex)
+            catch (FormatException ex) // Eror handling atau memberi informasi pada user
             {
                 Console.WriteLine("Input tidak valid: " + ex.Message);
             }
@@ -292,7 +292,7 @@ namespace AplikasiManajemenBioskop_0405
                     throw new FormatException("ID harus berupa angka.");
                 }
             }
-            catch (FormatException ex)
+            catch (FormatException ex) // Eror handling atau memberi informasi pada user
             {
                 Console.WriteLine("Input tidak valid: " + ex.Message);
             }
@@ -331,7 +331,7 @@ namespace AplikasiManajemenBioskop_0405
             }
         }
 
-        static void FilterFilm_0405()
+        static void FilterFilm_0405() // Untuk Memfilter film berdasarkan durasi
         {
             try
             {
@@ -352,7 +352,7 @@ namespace AplikasiManajemenBioskop_0405
                     throw new Exception("Film tidak ditemukan.");
                 }
             }
-            catch (Exception ex)
+            catch (Exception ex) // Eror handling atau memberi informasi pada user
             {
                 Console.WriteLine("Terjadi kesalahan saat filter film: " + ex.Message);
             }
@@ -535,7 +535,7 @@ namespace AplikasiManajemenBioskop_0405
                     return;
                 }
             }
-            catch (FormatException ex)
+            catch (FormatException ex) // Eror handling atau memberi informasi pada user
             {
                 Console.WriteLine("Input tidak valid: " + ex.Message);
             }
