@@ -1,10 +1,10 @@
 // # Kelas:IS-07-04 //
 // # Kelompok:5 //
 // # Anggota Kelompok: //
-// #1. Azizah Fitria Wibisono (102062400142)  //
-// #2. Dimas Arya Irwansyah (102062400113) //
-// #3. Dimas Dwi Suryo Aji (102062400139) //
-// #4. Gita Naisya Wardani (102062400034) //
+// #1. Gita Naisya Wardani (102062400034) //
+// #2. Azizah Fitria Wibisono (102062400142) //
+// #3. Dimas Arya Irwansyah (102062400113) //
+// #4. Dimas Dwi Suryo Aji (102062400139) //
 
 using System;
 using System.Collections.Generic;
@@ -37,13 +37,24 @@ namespace AplikasiManajemenBioskop_0405
 
     class Program
     {
+        // List untuk menyimpan data film yang tersedia
         static List<Film> daftarFilm = new List<Film>();
+
+        // List untuk menyimpan data pemesanan tiket
         static List<Pemesanan> daftarPemesanan = new List<Pemesanan>();
+
+        // Counter untuk ID film dan ID pemesanan
         static int idCounter = 1;
         static int idPemesananCounter = 1;
 
         static void Main(string[] args)
         {
+            // Film yang tersimpan di database
+            daftarFilm.Add(new Film { Id = idCounter++, Judul = "Moana 2", Durasi = 100, Genre = "Animation", Harga = 35000 });
+            daftarFilm.Add(new Film { Id = idCounter++, Judul = "Bila ibu esok tiada", Durasi = 104, Genre = "Drama, Family", Harga = 35000 });
+            daftarFilm.Add(new Film { Id = idCounter++, Judul = "2nd Miracle in Cell No.7", Durasi = 147, Genre = "Drama, Family", Harga = 50000 });
+            daftarFilm.Add(new Film { Id = idCounter++, Judul = "Modal Nekad", Durasi = 107, Genre = "Action, Comedy", Harga = 50000 });
+
             // Cek login terlebih dahulu
             if (Login_0405())
             {
@@ -52,7 +63,7 @@ namespace AplikasiManajemenBioskop_0405
                 // Program utama yang berjalan terus-menerus
                 while (true)
                 {
-                    // Menampilkan menu
+                    // Menampilkan menu utama
                     Console.WriteLine("=== Aplikasi Manajemen Bioskop ===");
                     Console.WriteLine("1. Tambah Film");
                     Console.WriteLine("2. Tampilkan Semua Film");
@@ -76,30 +87,14 @@ namespace AplikasiManajemenBioskop_0405
                         // Mengeksekusi pilihan sesuai menu
                         switch (pilihan_0405)
                         {
-                            case 1:
-                                TambahFilm_0405();
-                                break;
-                            case 2:
-                                LihatFilm_0405();
-                                break;
-                            case 3:
-                                UpdateFilm_0405();
-                                break;
-                            case 4:
-                                HapusFilm_0405();
-                                break;
-                            case 5:
-                                CariFilm_0405();
-                                break;
-                            case 6:
-                                FilterFilm_0405();
-                                break;
-                            case 7:
-                                PemesananTiket_0405();
-                                break;
-                            case 8:
-                                TampilkanInvoice_0405();
-                                break;
+                            case 1: TambahFilm_0405(); break;
+                            case 2: LihatFilm_0405(); break;
+                            case 3: UpdateFilm_0405(); break;
+                            case 4: HapusFilm_0405(); break;
+                            case 5: CariFilm_0405(); break;
+                            case 6: FilterFilm_0405(); break;
+                            case 7: PemesananTiket_0405(); break;
+                            case 8: TampilkanInvoice_0405(); break;
                             case 9:
                                 Console.WriteLine("Terima kasih telah menggunakan aplikasi ini!");
                                 return; // Keluar dari program
@@ -107,7 +102,7 @@ namespace AplikasiManajemenBioskop_0405
                                 throw new FormatException("Harap masukkan angka sesuai menu (1-9).");
                         }
                     }
-                    catch (FormatException ex) // Eror handling atau memberi informasi pada user
+                    catch (FormatException)
                     {
                         // Menangkap kesalahan jika input bukan angka
                         Console.WriteLine("Input tidak valid." + "Harap masukkan angka sesuai menu (1-9).");
@@ -149,14 +144,14 @@ namespace AplikasiManajemenBioskop_0405
                     return false;
                 }
             }
-            catch (FormatException ex) // Eror handling atau memberi informasi pada user
+            catch (FormatException ex) // eror handling
             {
                 Console.WriteLine("Terjadi kesalahan: " + ex.Message);
                 return false;
             }
         }
 
-        static void TambahFilm_0405() // Untuk fitur menambahkan film
+        static void TambahFilm_0405() // Fitur untuk menambahkan film
         {
             try
             {
@@ -173,14 +168,7 @@ namespace AplikasiManajemenBioskop_0405
                 Console.Write("Masukkan Harga Tiket: Rp.");
                 if (double.TryParse(Console.ReadLine(), out double harga))
                 {
-                    Film filmBaru = new Film
-                    {
-                        Id = idCounter++,
-                        Judul = judul,
-                        Durasi = durasi,
-                        Genre = genre,
-                        Harga = harga
-                    };
+                    Film filmBaru = new Film{Id = idCounter++, Judul = judul, Durasi = durasi, Genre = genre, Harga = harga};
                     daftarFilm.Add(filmBaru);
                     Console.WriteLine("Film berhasil ditambahkan.");
                 }
@@ -189,13 +177,13 @@ namespace AplikasiManajemenBioskop_0405
                     throw new FormatException("Harga harus berupa angka.");
                 }
             }
-            catch (FormatException ex) // Eror handling atau memberi informasi pada user
+            catch (FormatException ex) // eror handling
             {
                 Console.WriteLine("Input tidak valid: " + ex.Message);
             }
         }
 
-        static void LihatFilm_0405() // Untuk menampilkan daftar film yang sudah ditambahkan
+        static void LihatFilm_0405() // Fitur untuk melihat daftar film
         {
             try
             {
@@ -205,19 +193,26 @@ namespace AplikasiManajemenBioskop_0405
                     Console.WriteLine("Belum ada film yang terdaftar.");
                     return;
                 }
-
-                foreach (var film in daftarFilm)
+                else
                 {
+                    foreach (var film in daftarFilm)
+                {
+                    if (film == null)
+                    {
+                        throw new Exception("Data film tidak valid.");
+                    }
+                
                     Console.WriteLine($"ID: {film.Id}, Judul: {film.Judul}, Durasi: {film.Durasi} menit, Genre: {film.Genre}, Harga: Rp.{film.Harga}");
                 }
+                }
             }
-            catch (Exception ex) // Eror handling atau memberi informasi pada user
+            catch (Exception ex)
             {
                 Console.WriteLine("Terjadi kesalahan saat menampilkan daftar film: " + ex.Message);
             }
         }
 
-        static void UpdateFilm_0405() // Untuk mengubah film jika ada kesalahan input
+        static void UpdateFilm_0405()
         {
             try
             {
@@ -258,17 +253,13 @@ namespace AplikasiManajemenBioskop_0405
                     throw new FormatException("ID harus berupa angka.");
                 }
             }
-            catch (FormatException ex) // Eror handling atau memberi informasi pada user
+            catch (FormatException ex)
             {
                 Console.WriteLine("Input tidak valid: " + ex.Message);
             }
-            catch (Exception ex)
-            {
-                Console.WriteLine("Terjadi kesalahan saat mengupdate film: " + ex.Message);
-            }
         }
 
-        static void HapusFilm_0405() // Untuk menghapus film jika ada kesalahan input
+        static void HapusFilm_0405()
         {
             try
             {
@@ -292,13 +283,14 @@ namespace AplikasiManajemenBioskop_0405
                     throw new FormatException("ID harus berupa angka.");
                 }
             }
-            catch (FormatException ex) // Eror handling atau memberi informasi pada user
+            catch (FormatException ex)
             {
                 Console.WriteLine("Input tidak valid: " + ex.Message);
             }
+
         }
 
-        static void CariFilm_0405() // Untuk mencari film dengan judul yang di inputkan
+        static void CariFilm_0405()
         {
             try
             {
@@ -306,7 +298,7 @@ namespace AplikasiManajemenBioskop_0405
                 Console.Write("Masukkan Judul Film yang ingin dicari: ");
                 string? judul = Console.ReadLine()?.ToLower();
 
-                if (string.IsNullOrWhiteSpace(judul)) // Validasi input jika user mengisi dengan enter atau dikosongi
+                if (string.IsNullOrWhiteSpace(judul))
                 {
                     Console.WriteLine("Judul film tidak boleh kosong.");
                     return;
@@ -325,13 +317,13 @@ namespace AplikasiManajemenBioskop_0405
                     throw new FormatException("Film tidak ditemukan.");
                 }
             }
-            catch (FormatException ex) // Eror handling atau memberi informasi pada user
+            catch (FormatException ex)
             {
                 Console.WriteLine("Terjadi kesalahan: " + ex.Message);
             }
         }
 
-        static void FilterFilm_0405() // Untuk Memfilter film berdasarkan durasi
+        static void FilterFilm_0405()
         {
             try
             {
@@ -339,7 +331,7 @@ namespace AplikasiManajemenBioskop_0405
                 Console.Write("Masukkan Durasi Film yang ingin difilter: ");
                 int durasi = int.Parse(Console.ReadLine());
 
-                var films = daftarFilm.FindAll(f => f.Durasi == durasi);
+                var films = daftarFilm.FindAll(f => f.Durasi >= durasi);
                 if (films != null && films.Count > 0)
                 {
                     foreach (var film in films)
@@ -352,7 +344,7 @@ namespace AplikasiManajemenBioskop_0405
                     throw new Exception("Film tidak ditemukan.");
                 }
             }
-            catch (Exception ex) // Eror handling atau memberi informasi pada user
+            catch (Exception ex)
             {
                 Console.WriteLine("Terjadi kesalahan saat filter film: " + ex.Message);
             }
@@ -535,7 +527,7 @@ namespace AplikasiManajemenBioskop_0405
                     return;
                 }
             }
-            catch (FormatException ex) // Eror handling atau memberi informasi pada user
+            catch (FormatException ex)
             {
                 Console.WriteLine("Input tidak valid: " + ex.Message);
             }
@@ -549,10 +541,12 @@ namespace AplikasiManajemenBioskop_0405
         // Tampilkan Invoice
         static void TampilkanInvoice_0405()
         {
+            try
+            {
             Console.WriteLine("=== Invoice Pemesanan ===");
             if (daftarPemesanan.Count == 0)
             {
-                Console.WriteLine("Belum ada pemesanan.");
+                throw new FormatException("Belum ada pemesanan tiket.");
                 return;
             }
 
@@ -589,6 +583,11 @@ namespace AplikasiManajemenBioskop_0405
                 Console.WriteLine("-------------------------------------------------------------");
             }
         }
+        catch (FormatException ex)
+        {
+            Console.WriteLine("Terjadi kesalahan saat menampilkan invoice: " + ex.Message);
+        }
 
     }
+}
 }
