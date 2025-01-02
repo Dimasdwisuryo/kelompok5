@@ -1,8 +1,8 @@
 // # Kelas:IS-07-04 //
 // # Kelompok:5 //
 // # Anggota Kelompok: //
-// #1. Gita Naisya Wardani (102062400034) //
-// #2. Azizah Fitria Wibisono (102062400142) //
+// #1. Azizah Fitria Wibisono (102062400142) //
+// #2. Gita Naisya Wardani (102062400034) //
 // #3. Dimas Arya Irwansyah (102062400113) //
 // #4. Dimas Dwi Suryo Aji (102062400139) //
 
