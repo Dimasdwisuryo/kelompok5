@@ -342,7 +342,7 @@ namespace AplikasiManajemenBioskop_0405
                 Console.Write("Masukkan Durasi Film yang ingin difilter: ");
                 int durasi = int.Parse(Console.ReadLine());
 
-                var films = daftarFilm.FindAll(f => f.Durasi >= durasi);
+                var films = daftarFilm.FindAll(f => f.Durasi == durasi);
                 if (films != null && films.Count > 0)
                 {
                     foreach (var film in films)
